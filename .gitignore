@@ -1,0 +1,4 @@
+client/temp
+client/dist
+
+client/.sass-cache/
