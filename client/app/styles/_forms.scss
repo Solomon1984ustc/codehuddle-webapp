@@ -1,0 +1,110 @@
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+  padding: 8px 13px;
+  width: 80%;
+  color: $dark_purple;
+
+  // Focus state
+  &:focus {
+    //border-color: rgba(82,168,236,.8);
+    //@include box-shadow(#{inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6)});
+    border-color: darken($yellow, 10%);
+    @include box-shadow(0 0 6px lighten($yellow, 20%));
+  }
+
+}
+
+
+input:focus:required:invalid,
+textarea:focus:required:invalid,
+select:focus:required:invalid {
+  color: #b94a48;
+  //border-color: lighten($red, 10%);
+  &:focus {
+    border-color: darken($yellow, 10%);
+    @include box-shadow(0 0 6px lighten($yellow, 20%));
+  }
+}
+
+// HTML5 invalid states
+// Shares styles with the .control-group.error above
+input:focus:required:invalid,
+textarea:focus:required:invalid,
+select:focus:required:invalid {
+  color: #b94a48;
+  //border-color: lighten($red, 10%);
+  &:focus {
+    border-color: darken($yellow, 10%);
+    @include box-shadow(0 0 6px lighten($yellow, 20%));
+  }
+}
+
+input,
+textarea {
+  @include placeholder(#bbb);
+  font-weight: normal;
+}
+
+.btn {
+  margin-top: -10px;
+  padding: 10px 20px 5px;
+  color: $dark_purple;
+  font-family: $heading_font_family;
+}
+
+fieldset {
+  margin: 10px 0;
+  legend {
+    color: $dark_purple;
+    font-family: $heading_font_family;
+    overflow: auto;
+    margin-bottom: 5px;
+    border-bottom: none;
+  } 
+}
+
+// Number bubbles
+// -------------------------
+$number_diameter: 42px;
+.step-number {
+  float: left;
+  font-family: $heading_font_family;
+  background-color: $yellow; 
+  width: $number_diameter;
+  height: $number_diameter;
+  -webkit-border-radius: 50%; 
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  margin-right: 8px;
+  span {
+    display: block;
+    margin-top: -1px;
+    padding-left: 2px;
+    font-size: 18px;
+    color: $dark_purple;
+    text-align: center;
+  }
+}
+.step-text {
+  float: left;
+}
+
+.step-info {
+  font-size: 14px;
+  margin-left: 4px;
+}
