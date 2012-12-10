@@ -3,6 +3,8 @@
 clientApp.controller('CreateCtrl', function($scope) {
   $scope.hideTip = true;
 
+  $scope.huddle = {};
+
   $scope.focus = function(){
     $scope.hideTip = false;
   }
@@ -12,9 +14,9 @@ clientApp.controller('CreateCtrl', function($scope) {
   }
 
   $scope.create = function() {
-    console.log("create new huddle: ", $scope.huddleName);
+    console.log("create new huddle: ", $scope.huddle);
     //clientApp.save($scope.project, function(project) {
-      $location.path('edit');
+    //  $location.path('edit');
     //});
   }
 

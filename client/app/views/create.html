@@ -10,7 +10,7 @@
       <div class="step-number"><span>1</span></div>
       <div class="step-text">Create a Huddle</div>
     </legend>
-    <input type="text" name="huddleName" ng-model="huddleName" ng-blur="blur()" ng-click="focus()" placeholder="Name your Huddle" required />
+    <input type="text" name="huddleName" ng-model="huddle.name" ng-blur="blur()" ng-click="focus()" placeholder="Name your Huddle" required />
     <button type="submit" class="btn" ng-click="create()" ng-disabled="isClean() || createHuddle.$invalid">Create</button>
     <p class="step-info" ng-show="hideTip" ng-hide="hideTip" ><i class="icon-info-sign"></i> Give your Huddle a descriptive title. If needed, you can change it later.</p>
   </fieldset>
