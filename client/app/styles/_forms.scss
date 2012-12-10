@@ -15,26 +15,20 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-  padding: 8px 13px;
-  width: 80%;
+  padding: 8px 0 8px 13px;
+  width: 100%;
   color: $dark_purple;
-
-  // Focus state
+  @include border-radius(0);
   &:focus {
-    //border-color: rgba(82,168,236,.8);
-    //@include box-shadow(#{inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6)});
     border-color: darken($yellow, 10%);
     @include box-shadow(0 0 6px lighten($yellow, 20%));
   }
-
 }
-
 
 input:focus:required:invalid,
 textarea:focus:required:invalid,
 select:focus:required:invalid {
   color: #b94a48;
-  //border-color: lighten($red, 10%);
   &:focus {
     border-color: darken($yellow, 10%);
     @include box-shadow(0 0 6px lighten($yellow, 20%));
@@ -47,7 +41,6 @@ input:focus:required:invalid,
 textarea:focus:required:invalid,
 select:focus:required:invalid {
   color: #b94a48;
-  //border-color: lighten($red, 10%);
   &:focus {
     border-color: darken($yellow, 10%);
     @include box-shadow(0 0 6px lighten($yellow, 20%));
@@ -60,12 +53,31 @@ textarea {
   font-weight: normal;
 }
 
-.btn {
-  margin-top: -10px;
-  padding: 10px 20px 5px;
-  color: $dark_purple;
-  font-family: $heading_font_family;
+input:focus,
+textarea:focus {
+  @include placeholder(#fff);
+  font-weight: normal;
 }
+
+.btn {
+  font-size: 20px;
+  padding: 7px 26px 6px;
+  width: 100%;
+  @include border-radius(0);
+  border-bottom: 5px solid rgba(0,0,0,.2);
+  background-color: $grey;
+  background-image: none;
+  color: $red;
+  &:active,
+  &:hover{
+    background-image: none;
+    background-color: $grey;
+    border-bottom: 5px solid $red; 
+    color: darken($red, 10%);
+  }
+
+}
+
 
 fieldset {
   margin: 10px 0;
@@ -95,7 +107,7 @@ $number_diameter: 42px;
     display: block;
     margin-top: -1px;
     padding-left: 2px;
-    font-size: 18px;
+    font-size: 22px;
     color: $dark_purple;
     text-align: center;
   }
