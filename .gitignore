@@ -1,4 +1,4 @@
-client/temp
-client/dist
+temp
+dist
 
-client/.sass-cache/
+.sass-cache
