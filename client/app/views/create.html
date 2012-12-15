@@ -1,10 +1,10 @@
 <div class="hero-unit">
   <h1>Got something to teach the world?</h1>
-  <p>A Huddle is a set of files that contain the contents (text &amp; images) of your course material to generate a presentation slidedeck for your class or the HTML for an online tutorial.</p>
+  <p>A Huddle is a set of files that contain the contents (text &amp; images) of your course material to generate a presentation slidedeck for your class, or the HTML for an online tutorial.</p>
   <p>It's easy to get started!</p>
 </div>
 
-  <form name="createHuddle">
+<form name="createHuddle">
   <fieldset>
     <legend>
       <div class="step-number"><span>1</span></div>
@@ -12,12 +12,12 @@
     </legend>
     <div class="row-fluid">
       <div class="span10">
-        <input type="text" name="huddleName" ng-model="huddle.name" ng-blur="blur()" ng-click="focus()" placeholder="Name of your Huddle" required />
+        <input type="text" ng-model="huddle.huddleName" ng-blur="blur()" ng-click="focus()" placeholder="Enter in a name for your Huddle" required />
       </div>
       <div class="span2">
-        <button type="submit" class="btn" ng-click="create()" ng-disabled="isClean() || createHuddle.$invalid">Create</button>
+        <button type="submit" class="btn" ng-click="create()">Create</button>
       </div>
     </div>
-    <p class="step-info" ng-show="hideTip" ng-hide="hideTip" ><i class="icon-info-sign"></i> Give your Huddle a descriptive title. If needed, you can change it later.</p>
+    <p class="step-info" ng-show="showTip" ><i class="icon-info-sign"></i> Give your Huddle a descriptive title. If needed, you can change it later.</p>
   </fieldset>
-  </form>
+</form>

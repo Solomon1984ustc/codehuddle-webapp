@@ -1,1 +1,52 @@
-<p>This is the edit view.</p>
+<!-- {{huddle.huddleId}} -->
+
+<div class="hero-unit">
+  <h1>{{huddle.huddleName}}</h1>
+  <p>Use the easy to read and write Markdown syntx to create the content of your course material or online tutorial.</p>
+</div>
+
+<fieldset>
+
+  <legend>
+    <div class="step-number"><span>2</span></div>
+    <div class="step-text">Edit &amp; add slides to your Huddle</div>
+  </legend>
+
+</fieldset>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+
+    <div class="span2">
+      <div id="file-pane">
+        
+        <h2>Files</h2>
+        <!-- <div id="non-sortable-files">
+          <div class="file {{indexFile.editStatus}}" data-file-id="{{indexFile.id}}" ng-click="fileClick(indexFile)"> <i class="icon-file"></i> {{indexFile.name}} <i class="icon-play"></i>
+          </div>
+        </div> -->
+        <div id="sortable-files">
+          <div ng-repeat="file in outline" id="file-{{file.id}}" class="file {{file.editStatus}}" ng-click="fileClick(file)"> <i class="icon-file"></i> {{file.name}} <i class="icon-play"></i> 
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="span10">
+      <div id="edit-pane">
+        <div id="epiceditor" ng-init="init()"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<fieldset id="preview">
+
+  <legend>
+    <div class="step-number"><span>3</span></div>
+    <div class="step-text">Preview your Huddle</div>
+  </legend>
+
+  <button class="btn" ng-click="preview()">Preview</button>
+
+</fieldset>

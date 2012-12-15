@@ -1,11 +1,11 @@
 /* ***** COLOUR PALLETTE CONSTANTS */
-$red:       #f26964;
-$blue:      #0f5ab8;
-$yellow:    #ffd464;
-$dark_purple:   #351a60;
+$red:         #f26964;
+$blue:        #0f5ab8;
+$yellow:      #ffd464;
+$dark_purple: #351a60;
 $light_blue:  #97dedd;
-$grey:      #f1f0ee;
-$white:     #ffffff;
+$grey:        #f1f0ee;
+$white:       #ffffff;
 
 /* ***** FONT CONSTANTS */
 @font-face {
@@ -53,11 +53,25 @@ $navbarLinkColorActive:           $red !default;
 $heroUnitBackground:              $grey !default;
 $heroUnitHeadingColor:            $blue !default;
 
+// Forms
+// -------------------------
+// $inputBackground:               $white !default;
+// $inputBorder:                   #ccc !default;
+$inputBorderRadius:             0px !default;
+// $inputDisabledBackground:       $grayLighter !default;
+
+// Buttons
+// -------------------------
+$btnBackground:                     $grey !default;
+$btnBackgroundHighlight:            lighten($grey, 10%) !default;
+//$btnBorder:                         #bbb !default;
+
 @import "compass_twitter_bootstrap";
 
 // ***** MORE OVERRIDE TWITTER BOOTSTRAP CLASSES
 
 @import "forms";
+@import "edit";
 
 .hero-unit {
   margin-top: 20px;

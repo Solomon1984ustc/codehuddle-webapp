@@ -1,23 +1,25 @@
 'use strict';
 
-clientApp.controller('CreateCtrl', function($scope) {
-  $scope.hideTip = true;
+clientApp.controller('CreateCtrl', function($scope, $location, Huddle) {
+  
+  $scope.huddle = Huddle.get();
 
-  $scope.huddle = {};
+  $scope.showTip = false;
 
   $scope.focus = function(){
-    $scope.hideTip = false;
+    $scope.showTip = true;
   }
 
   $scope.blur = function(){
-    $scope.hideTip = true;
+    $scope.showTip = false;
   }
 
   $scope.create = function() {
-    console.log("create new huddle: ", $scope.huddle);
-    //clientApp.save($scope.project, function(project) {
-    //  $location.path('edit');
-    //});
+    Huddle.create(function(huddleId){
+      //console.log("id of new huddle: " + huddleId);
+      //$location.path('edit/' + huddleId);
+      $location.path('settings/' + huddleId);
+    });
   }
 
 });
