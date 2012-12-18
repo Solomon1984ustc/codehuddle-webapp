@@ -64,21 +64,27 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
       var selector = '#file-'+$scope.indexFile.id;
       $("#sortable-files").fixedsortable({
         fixed: selector,
-        // start: function( event, ui ) {
-        //   $(selector).tooltip('show');
-        // }
+        start: function( event, ui ) {
+          $(selector).tooltip('hide');
+        }
       });
-      $(selector).tooltip({title:"This file's order cannot be changed", placement:"left", trigger:"manual"}); //change to manual focus
+      $(selector).tooltip({title:"This section's order cannot be changed", placement:"left", trigger:"manual"});
       var timeoutID;
       $(selector).mousedown(function(){
         timeoutID = window.setTimeout(function(){
           $(selector).tooltip('show');
-        }, 500);
+        }, 800);
       });
-      $(window).mouseup(function(){
-        window.clearTimeout(timeoutID)
+      $(document).mouseup(function(){
+        window.clearTimeout(timeoutID);
         $(selector).tooltip('hide');
       });
+
+      // add section tool tips
+      $("#add-section").tooltip({placement:"left", trigger:"hover"});
+      $("#remix-btn").tooltip({placement:"left", trigger:"hover"});
+
+
     });
 
   }
@@ -101,6 +107,10 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
     // saveToServerAjaxCall('/save', {data:theContent}, function () {
     //   console.log('Data was saved to the database.');
     // });
+  }
+
+  $scope.add = function(){
+
   }
 
   $scope.preview = function() {

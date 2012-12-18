@@ -9,7 +9,7 @@
 
   <legend>
     <div class="step-number"><span>2</span></div>
-    <div class="step-text">Edit &amp; add slides to your Huddle</div>
+    <div class="step-text">Edit &amp; add sections to your Huddle</div>
   </legend>
 
 </fieldset>
@@ -20,15 +20,15 @@
     <div class="span2">
       <div id="file-pane">
         
-        <h2>Files</h2>
-        <!-- <div id="non-sortable-files">
-          <div class="file {{indexFile.editStatus}}" data-file-id="{{indexFile.id}}" ng-click="fileClick(indexFile)"> <i class="icon-file"></i> {{indexFile.name}} <i class="icon-play"></i>
-          </div>
-        </div> -->
+        <h2>Sections</h2>
         <div id="sortable-files">
           <div ng-repeat="file in outline" id="file-{{file.id}}" class="file {{file.editStatus}}" ng-click="fileClick(file)"> <i class="icon-file"></i> {{file.name}} <i class="icon-play"></i> 
           </div>
         </div>
+        <hr />
+        <div id="add-section" ng-click="add()" title="Create a new section"><i class="icon-plus-sign"></i> Add</div>
+        <hr />
+        <div id="remix-btn" ng-click="remix()" title="Incorporate one or more sections from other existing Huddles"><i class="icon-random"></i> Remix</div>
       </div>
     </div>
 
