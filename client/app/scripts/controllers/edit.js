@@ -1,16 +1,25 @@
 'use strict';
 
-clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddle) {
+clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddle, Mongo) {
 
-  // if ( typeof $routeParams.huddleId !== "undefined" ) {
-  //   console.log($routeParams.huddleId);
-  //   $scope.huddleId = $routeParams.huddleId;
-  //   $scope.huddle = Huddle; //TODO: query db for this id
-  // }else{
-    $scope.huddle = Huddle.getDummyData();
-  // }
+  console.log("$routeParams.huddleId",$routeParams.huddleId);
+  if ( $routeParams.huddleId !== '' ) {
+    $scope.huddle = Mongo.getHuddle(
+      {
+        huddleId: $routeParams.huddleId
+      },
+      function(){
+        console.log("get success", $scope.huddle);
+      },
+      function(err){
+        console.log("get error", err);
+      }
+    );
+  }else{
+    $scope.redirectMsg = 'Go back to <a href="/browse">browsing</a>.';
+  }
 
-  // $scope.indexFile = {"id":"1", "name":"index"};
+  //TODO: temp data. will come from backend
   $scope.outline = [ 
       {"id":"1", "name":"index"},
       {"id":"2", "name":"agenda"},
@@ -18,10 +27,8 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
     ];
 
   // default to editing index file
-  // $scope.editingFile = $scope.indexFile; 
   $scope.indexFile = _.find($scope.outline, function(file){ return file.name === "index"; });
   $scope.editingFile = $scope.indexFile;
-  $scope.editingFile.editStatus = "editing";
 
   $scope.editor;
   var opts = {
@@ -68,7 +75,7 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
           $(selector).tooltip('hide');
         }
       });
-      $(selector).tooltip({title:"This section's order cannot be changed", placement:"left", trigger:"manual"});
+      $(selector).tooltip({title:"This section's order cannot be changed", placement:"right", trigger:"manual"});
       var timeoutID;
       $(selector).mousedown(function(){
         timeoutID = window.setTimeout(function(){
@@ -80,26 +87,27 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
         $(selector).tooltip('hide');
       });
 
-      // add section tool tips
-      $("#add-section").tooltip({placement:"left", trigger:"hover"});
-      $("#remix-btn").tooltip({placement:"left", trigger:"hover"});
+      // "add" button tool tips
+      $("#add-section").tooltip({placement:"right"});
 
+      // "remix" button tool tips
+      $("#remix-btn").tooltip({placement:"right"});
 
-    });
+    }); //end load()
 
   }
 
   $scope.fileClick = function(file) {
-    console.log("fileClick",file);
-
-    $scope.editingFile.editStatus = ""; //clear the old editing one
+    //console.log("fileClick",file);
 
     //TODO: load in file
     $scope.editingFile = file;
     //$scope.editor.open($scope.editingFile.name);
 
-    // Update editing icon status
-    $scope.editingFile.editStatus = "editing";
+  }
+
+  $scope.isEditing = function(file) {
+    return ($scope.editingFile === file);
   }
 
   $scope.saveMarkdown = function(){
@@ -110,14 +118,13 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
   }
 
   $scope.add = function(){
-
+    $scope.outline.push({"id":"4", "name":"untitled"}); //TODO
   }
 
   $scope.preview = function() {
-    console.log("preview");
-    $location.path('preview/' + $scope.huddle.huddleId);
+    //console.log("preview");
+    $location.path('preview/' + $scope.huddle._id);
   }
-
   
 
 });

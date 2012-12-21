@@ -10,6 +10,10 @@ var clientApp = angular.module('clientApp', ['ngResource','ui'])
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/browse', {
+        templateUrl: 'views/browse.html',
+        controller: 'BrowseCtrl'
+      })
       .when('/create', {
         templateUrl: 'views/create.html',
         controller: 'CreateCtrl'

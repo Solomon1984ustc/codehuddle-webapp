@@ -5,7 +5,8 @@
   h2 {
     font-size: 14px;
     line-height: 14px;
-    margin-top: 0;
+    margin: 10px 0px 2px 0px;
+    padding: 2px 4px;
   }
 
   .file {
@@ -35,6 +36,19 @@
       }
     }
   }
+
+  #add-section, 
+  #remix-btn {
+    //text-align: center;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 0px 4px;
+  }
+
+  hr {
+    margin: 6px 0;
+  }
+
 }
 
 
@@ -60,3 +74,4 @@
 #preview {
   margin-top: 30px
 }
+

@@ -66,6 +66,10 @@ $btnBackground:                     $grey !default;
 $btnBackgroundHighlight:            lighten($grey, 10%) !default;
 //$btnBorder:                         #bbb !default;
 
+// Hr border color
+// -------------------------
+$hrBorder:                #ccc !default;
+
 @import "compass_twitter_bootstrap";
 
 // ***** MORE OVERRIDE TWITTER BOOTSTRAP CLASSES
@@ -92,4 +96,14 @@ $btnBackgroundHighlight:            lighten($grey, 10%) !default;
     line-height: $baseLineHeight;
     // color: $heroUnitLeadColor;
   }
+}
+
+.tooltip {
+  font-size: 13px;
+  line-height: $baseFontSize;
+}
+
+.alert {
+  font-size: 13px;
+  //line-height: $baseFontSize;
 }

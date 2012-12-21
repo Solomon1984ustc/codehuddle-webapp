@@ -1,4 +1,8 @@
-<!-- {{huddle.huddleId}} -->
+<!-- HuddeId: {{huddle._id}} -->
+
+<div class="alert alert-error" ng-show="redirectMsg">
+  <strong>Oops!</strong> Cannot find a preview for this Huddle. {{redirectMsg}}
+</div>
 
 <div class="hero-unit">
   <h1>{{huddle.huddleName}}</h1>
@@ -19,16 +23,17 @@
 
     <div class="span2">
       <div id="file-pane">
-        
+        <hr />
         <h2>Sections</h2>
         <div id="sortable-files">
-          <div ng-repeat="file in outline" id="file-{{file.id}}" class="file {{file.editStatus}}" ng-click="fileClick(file)"> <i class="icon-file"></i> {{file.name}} <i class="icon-play"></i> 
+          <div ng-repeat="file in outline" id="file-{{file.id}}" class="file" ng-class="{'editing':isEditing(file)}" ng-click="fileClick(file)"> <i class="icon-file"></i> {{file.name}} <i class="icon-play"></i> 
           </div>
         </div>
         <hr />
         <div id="add-section" ng-click="add()" title="Create a new section"><i class="icon-plus-sign"></i> Add</div>
         <hr />
         <div id="remix-btn" ng-click="remix()" title="Incorporate one or more sections from other existing Huddles"><i class="icon-random"></i> Remix</div>
+        <hr />
       </div>
     </div>
 

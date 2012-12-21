@@ -57,16 +57,18 @@ textarea:focus {
   border-bottom: 5px solid rgba(0,0,0,.2);
   background-image: none;
   color: $red;
-  // &:active {
+}
+
+.btn.enabled {
   &:hover {
     background-image: none;
     background-color: $grey;
     border-bottom: 5px solid $red; 
     color: darken($red, 10%);
   }
-  // }
-
 }
+
+
 
 fieldset {
   margin: 10px 0;

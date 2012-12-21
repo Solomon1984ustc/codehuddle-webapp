@@ -12,12 +12,17 @@
     </legend>
     <div class="row-fluid">
       <div class="span10">
-        <input type="text" ng-model="huddle.huddleName" ng-blur="blur()" ng-click="focus()" placeholder="Enter in a name for your Huddle" required />
+        <input type="text" ng-model="huddleLocal.huddleName" ng-blur="blur()" ng-click="focus()" placeholder="Enter in a name for your Huddle" required />
       </div>
       <div class="span2">
-        <button type="submit" class="btn" ng-click="create()">Create</button>
+        <button class="btn" ng-class="{'enabled':!isBlank(huddleLocal.huddleName)}" ng-disabled="isBlank()" ng-click="create()">Create</button>
       </div>
     </div>
     <p class="step-info" ng-show="showTip" ><i class="icon-info-sign"></i> Give your Huddle a descriptive title. If needed, you can change it later.</p>
   </fieldset>
 </form>
+
+<div class="alert fade in" ng-show="creationError">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Oops!</strong> Something went wrong trying to create "{{huddleLocal.huddleName}}". It was probably our fault. Give it another try.
+</div>

@@ -2,28 +2,12 @@
 
 clientApp.controller('MainCtrl', function($scope, $resource, Huddle, Mongo) {
 
-  $scope.result = { text: "loading" };
-
   $scope.sitemap = [
-    {title:'Browse',view:''},
+    {title:'Browse',view:'browse'},
     {title:'Create',view:'create'},
-    {title:'Edit',view:'edit/123'},
-    {title:'Preview',view:'preview/123'},
-    {title:'Pick',view:''}
+    {title:'Edit',view:'edit/50bb7d197a22ba50e2000001'},
+    {title:'Preview',view:'preview/50bb7d197a22ba50e2000001'},
+    {title:'Pick',view:'pick/50bb7d197a22ba50e2000001'}
   ];
-
-  $scope.test = function() {
-
-    if ( $scope.result.text == "loading" ) {
-      Mongo.get({huddleId: 'test'}, function(result) {
-        $scope.result = result;
-      });
-    }else{
-      Mongo.get({huddleId: 'again'}, function(result) {
-        $scope.result = result;
-      });
-    }
-
-  }
 
 });
