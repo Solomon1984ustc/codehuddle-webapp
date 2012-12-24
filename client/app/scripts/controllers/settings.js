@@ -24,6 +24,7 @@ clientApp.controller('SettingsCtrl', function($scope, $routeParams, Huddle, Mong
         console.log('get success', $scope.huddleServer);
         Huddle.update($scope.huddleServer);
         copyHuddleSettings($scope.huddleServer, $scope.huddleSettings);
+        $scope.init();
       }, function(err) {
         console.log('get error', err);
       });
@@ -97,5 +98,35 @@ clientApp.controller('SettingsCtrl', function($scope, $routeParams, Huddle, Mong
       $scope.updateError = true;
     });
   };
+
+  $scope.init = function() {
+
+    $('#tech-main-tags').val($scope.huddleSettings.techMain);
+    $('#tech-main-tags').tagsInput({ 
+      autocomplete_url: '/technologies.html', //TODO: not working?
+      defaultText: '',
+      onAddTag: $scope.updateTechTag,
+      onRemoveTag: $scope.updateTechTag,
+      width: '100%', 
+      height: '16px'
+    });
+
+    $('#tech-supporting-tags').val($scope.huddleSettings.techSupporting);
+    $('#tech-supporting-tags').tagsInput({ 
+      autocomplete_url: '/technologies.html', //TODO: not working?
+      defaultText: '',
+      onAddTag: $scope.updateTechTag,
+      onRemoveTag: $scope.updateTechTag,
+      width: '100%', 
+      height: '16px'
+    });
+
+  }
+
+  $scope.updateTechTag = function() {
+    $scope.huddleSettings.techMain = $('#tech-main-tags').val();
+    $scope.huddleSettings.techSupporting = $('#tech-supporting-tags').val();
+    $scope.save();
+  }
 
 });

@@ -3,6 +3,7 @@ $red:         #f26964;
 $blue:        #0f5ab8;
 $yellow:      #ffd464;
 $dark_purple: #351a60;
+$light_purple:  #7454a9;
 $light_blue:  #97dedd;
 $grey:        #f1f0ee;
 $white:       #ffffff;
@@ -75,7 +76,9 @@ $hrBorder:                #ccc !default;
 // ***** MORE OVERRIDE TWITTER BOOTSTRAP CLASSES
 
 @import "forms";
+@import "tagsinput";
 @import "edit";
+@import "browse";
 
 .hero-unit {
   margin-top: 20px;

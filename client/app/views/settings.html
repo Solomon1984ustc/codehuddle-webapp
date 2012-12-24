@@ -33,12 +33,12 @@
 
     <div>
       <label for="techMain">Main technologies covered:</label>
-      <input type="text" ng-model="huddleSettings.techMain" ng-blur="save()" ui-keyup="{'enter':'save()'}" />
+      <input type="text" id="tech-main-tags" ui-keyup="{'enter':'save()'}" />
     </div>
 
     <div>
       <label for="techSupporting">Supporting technologies covered:</label>
-      <input type="text" ng-model="huddleSettings.techSupporting" ng-blur="save()" ui-keyup="{'enter':'save()'}" />
+      <input type="text" id="tech-supporting-tags" ui-keyup="{'enter':'save()'}" />
     </div>
 
     <div>

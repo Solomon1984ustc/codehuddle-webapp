@@ -9,6 +9,11 @@ clientApp.factory('Mongo', function($resource) {
       huddleId: '@huddleId'
     },
     {
+      listAllHuddles: {
+        method: 'GET',
+        params: {action:'listAllHuddles'},
+        isArray: true
+      },
       createHuddle: {
         method: 'POST',
         params: {action:'createHuddle'}
@@ -20,12 +25,14 @@ clientApp.factory('Mongo', function($resource) {
       updateHuddle: {
         method: 'POST',
         params: {action:'updateHuddle'}
+      },
+      generateHuddle: {
+        method: 'POST',
+        params: {action:'generateHuddle'}
       }
   });
 
 });
-
-//listAllHuddles
 
 // api/
 //x createHuddle
