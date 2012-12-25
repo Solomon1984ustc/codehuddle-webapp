@@ -7,9 +7,9 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
   $scope.outline = {};
   //TODO: temp data. will come from backend
   // $scope.outline = [ 
-  //     {"filename":"index",  "title":"Index"},
-  //     {"filename":"agenda", "title":"Agenda"},
-  //     {"filename":"create", "title":"Create"}
+  //     {"filename":"welcome"},
+  //     {"filename":"agenda"},
+  //     {"filename":"create"}
   //   ];
   $scope.huddleFiles = {};
   $scope.untitledCounter = 0;
@@ -36,7 +36,7 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
           console.log( $scope.outline );
 
           // default to editing index file
-          $scope.indexFile = _.find($scope.outline, function(file){ return file.filename === "index"; });
+          $scope.indexFile = _.find($scope.outline, function(file){ return file.filename === "welcome"; });
           //$scope.editingFile = $scope.indexFile;
           $scope.updateFileList();
           $scope.init();
@@ -171,7 +171,33 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
 
   $scope.add = function(){
     $scope.untitledCounter += 1;
-    $scope.outline.push({"filename":"untitled"+$scope.untitledCounter,"title":"Untitled"}); //TODO
+    var filename = "untitled"+$scope.untitledCounter;
+    $scope.outline.push({"filename":filename}); //TODO
+    $scope.updateFile( filename );
+  }
+
+  $scope.updateFile = function(filename) {
+    // if (typeof(content) === "undefined") {
+    //     content = null; 
+    // }
+    //data = "filename=" + filename + "&data=" + btoa(content) + "&huddle=" + huddleId;
+    console.log("updateFile", filename);
+    console.log("exportFile", $scope.editor.exportFile());
+
+    $scope.updateFileStatus = FileManager.updateFile(
+      {
+        filename: filename,
+        huddleId: $scope.localHuddle._id
+      },
+      {
+        data: btoa($scope.editor.exportFile())
+      },
+      function(){
+        console.log("updateFile: ", $scope.updateFileStatus);
+      },
+      function(err){
+        console.log("updateFile err: ", err);
+      });
   }
 
   $scope.preview = function() {
