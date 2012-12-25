@@ -1,108 +1,160 @@
 'use strict';
 
-clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddle, Mongo) {
+clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddle, Mongo, OutlineManager, FileManager) {
 
-  console.log("$routeParams.huddleId",$routeParams.huddleId);
+  //console.log("$routeParams.huddleId",$routeParams.huddleId);
+
+  $scope.outline = {};
+  //TODO: temp data. will come from backend
+  // $scope.outline = [ 
+  //     {"filename":"index",  "title":"Index"},
+  //     {"filename":"agenda", "title":"Agenda"},
+  //     {"filename":"create", "title":"Create"}
+  //   ];
+  $scope.huddleFiles = {};
+  $scope.untitledCounter = 0;
+  $scope.fileContents = '';
+  $scope.editor;
+
   if ( $routeParams.huddleId !== '' ) {
-    $scope.huddle = Mongo.getHuddle(
+    $scope.localHuddle = Mongo.getHuddle(
       {
         huddleId: $routeParams.huddleId
       },
       function(){
-        console.log("get success", $scope.huddle);
+        console.log("get success", $scope.localHuddle);
+        // Huddle.update($scope.huddleServer);
+        // copyHuddleSettings($scope.huddleServer, $scope.huddleSettings);
+        
+        // get file outline
+        $scope.huddleFiles = OutlineManager.listFilesForHuddle({
+          huddleId: $scope.localHuddle._id
+        }, function() {
+          console.log('get success', $scope.huddleFiles);
+
+          $scope.outline = $scope.huddleFiles.outline;
+          console.log( $scope.outline );
+
+          // default to editing index file
+          $scope.indexFile = _.find($scope.outline, function(file){ return file.filename === "index"; });
+          //$scope.editingFile = $scope.indexFile;
+          $scope.updateFileList();
+          $scope.init();
+
+        }, function(err) {
+          console.log('get error', err);
+        });
+
       },
       function(err){
         console.log("get error", err);
       }
     );
   }else{
-    $scope.redirectMsg = 'Go back to <a href="/browse">browsing</a>.';
+    $scope.showRedirectMsg = true;
   }
 
-  //TODO: temp data. will come from backend
-  $scope.outline = [ 
-      {"id":"1", "name":"index"},
-      {"id":"2", "name":"agenda"},
-      {"id":"3", "name":"create"}
-    ];
-
-  // default to editing index file
-  $scope.indexFile = _.find($scope.outline, function(file){ return file.name === "index"; });
-  $scope.editingFile = $scope.indexFile;
-
-  $scope.editor;
-  var opts = {
-    container: 'epiceditor',
-    basePath: '/components/epiceditor',
-    clientSideStorage: true,
-    localStorageName: 'epiceditor',
-    parser: marked,
-    file: {
-      name: 'epiceditor',
-      defaultContent: '',
-      autoSave: 100
-    },
-    theme: {
-      base:'/themes/base/epiceditor.css',
-      preview:'/themes/preview/github.css',
-      editor:'/themes/editor/epic-dark.css'
-    },
-    focusOnLoad: false,
-    shortcut: {
-      modifier: 18,
-      fullscreen: 70,
-      preview: 80,
-      edit: 79
-    }
-  }
 
   $scope.init = function(){
 
     /* IMPORTANT NOTE: must wait for window to be fully loaded
        before initializing editor, otherwise something is blocked
        and Angular throws an RangeError exception */
-    $(window).load(function() {
+    // $(window).load(function() {
+
+      var opts = {
+        container: 'epiceditor',
+        basePath: '/components/epiceditor',
+        clientSideStorage: true,
+        localStorageName: 'epiceditor',
+        parser: marked,
+        file: {
+          //name: 'http://localhost:8000/api/viewFile/' + filename + '/' + $scope.localHuddle._id,
+          defaultContent: '',
+          autoSave: 100
+        },
+        theme: {
+          base:'/themes/base/epiceditor.css',
+          preview:'/themes/preview/github.css',
+          editor:'/themes/editor/epic-dark.css'
+        },
+        focusOnLoad: false,
+        shortcut: {
+          modifier: 18,
+          fullscreen: 70,
+          preview: 80,
+          edit: 79
+        }
+      }
 
       // initialize Markdown editor
       $scope.editor = new EpicEditor(opts);
-      $scope.editor.load();
-
-      // make all files re-sortable except the index file (which is always fixed)
-      var selector = '#file-'+$scope.indexFile.id;
-      $("#sortable-files").fixedsortable({
-        fixed: selector,
-        start: function( event, ui ) {
-          $(selector).tooltip('hide');
-        }
+      $scope.editor.load(function(){
+        console.log("editor loaded");
       });
-      $(selector).tooltip({title:"This section's order cannot be changed", placement:"right", trigger:"manual"});
-      var timeoutID;
-      $(selector).mousedown(function(){
-        timeoutID = window.setTimeout(function(){
-          $(selector).tooltip('show');
-        }, 800);
-      });
-      $(document).mouseup(function(){
-        window.clearTimeout(timeoutID);
-        $(selector).tooltip('hide');
-      });
+      
+      //$scope.editor.open( 'http://localhost:8000/api/viewFile/' + filename + '/' + $scope.localHuddle._id );
+      $scope.fileClick($scope.indexFile);
 
-      // "add" button tool tips
-      $("#add-section").tooltip({placement:"right"});
-
-      // "remix" button tool tips
-      $("#remix-btn").tooltip({placement:"right"});
-
-    }); //end load()
+    // }); //end load()
 
   }
 
-  $scope.fileClick = function(file) {
-    //console.log("fileClick",file);
+  $scope.updateFileList = function() {
+    // make all files re-sortable except the index file (which is always fixed)
+    var selector = '#file-'+$scope.indexFile.filename;
+    $("#sortable-files").fixedsortable({
+      fixed: selector,
+      start: function( event, ui ) {
+        $(selector).tooltip('hide');
+      }
+    });
+    $(selector).tooltip({title:"This section's order cannot be changed", placement:"right", trigger:"manual"});
+    var timeoutID;
+    $(selector).mousedown(function(){
+      timeoutID = window.setTimeout(function(){
+        $(selector).tooltip('show');
+      }, 800);
+    });
+    $(document).mouseup(function(){
+      window.clearTimeout(timeoutID);
+      $(selector).tooltip('hide');
+    });
 
-    //TODO: load in file
+    // "add" button tool tips
+    $("#add-section").tooltip({placement:"right"});
+
+    // "remix" button tool tips
+    $("#remix-btn").tooltip({placement:"right"});
+  }
+
+  $scope.fileClick = function(file) {
+    console.log("fileClick",file);
+
     $scope.editingFile = file;
-    //$scope.editor.open($scope.editingFile.name);
+
+    // Load in index file (Note: didn't work)
+    // var viewFilePath = 'http://localhost:8000/api/viewFile/' + file.filename + '.md/' + $scope.localHuddle._id;
+    // console.log( viewFilePath );
+    // $scope.editor.importFile( viewFilePath, "#doesn't work" );
+    
+    // Load in index file
+    $scope.fileContents = FileManager.viewFile({
+      filename: file.filename + '.md',
+      huddleId: $scope.localHuddle._id
+    }, function() {
+      //console.log( $scope.fileContents );
+
+      // NOTE: don't know why it comes back like an Array-like object
+      // but need to convert using makeArray....
+      // which is the same as Array.prototype.slice.call($scope.fileContents);
+      $scope.fileContents.length = _.size($scope.fileContents); // need length for makeArray to work
+      var contents = $.makeArray($scope.fileContents).join(''); 
+      $scope.editor.importFile( '', contents );
+
+    }, function(err) {
+      console.log('get error', err);
+    });
 
   }
 
@@ -118,13 +170,13 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
   }
 
   $scope.add = function(){
-    $scope.outline.push({"id":"4", "name":"untitled"}); //TODO
+    $scope.untitledCounter += 1;
+    $scope.outline.push({"filename":"untitled"+$scope.untitledCounter,"title":"Untitled"}); //TODO
   }
 
   $scope.preview = function() {
     //console.log("preview");
-    $location.path('preview/' + $scope.huddle._id);
+    $location.path('preview/' + $scope.localHuddle._id);
   }
-  
 
 });

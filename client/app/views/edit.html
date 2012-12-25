@@ -1,11 +1,10 @@
-<!-- HuddeId: {{huddle._id}} -->
-
-<div class="alert alert-error" ng-show="redirectMsg">
-  <strong>Oops!</strong> Cannot find a preview for this Huddle. {{redirectMsg}}
+<div class="alert alert-error" ng-show="showRedirectMsg">
+  <strong>Oops!</strong> Cannot find a preview for this Huddle with id {{huddleLocal._id}}.<br />
+  Go back to <a href="#/browse">browsing</a>.
 </div>
 
 <div class="hero-unit">
-  <h1>{{huddle.huddleName}}</h1>
+  <h1>{{localHuddle.huddleName}}</h1>
   <p>Use the easy to read and write Markdown syntx to create the content of your course material or online tutorial.</p>
 </div>
 
@@ -26,7 +25,7 @@
         <hr />
         <h2>Sections</h2>
         <div id="sortable-files">
-          <div ng-repeat="file in outline" id="file-{{file.id}}" class="file" ng-class="{'editing':isEditing(file)}" ng-click="fileClick(file)"> <i class="icon-file"></i> {{file.name}} <i class="icon-play"></i> 
+          <div ng-repeat="file in outline" id="file-{{file.filename}}" class="file" ng-class="{'editing':isEditing(file)}" ng-click="fileClick(file)"> <i class="icon-file"></i> {{file.filename}} <i class="icon-play"></i> 
           </div>
         </div>
         <hr />
@@ -39,7 +38,7 @@
 
     <div class="span10">
       <div id="edit-pane">
-        <div id="epiceditor" ng-init="init()"></div>
+        <div id="epiceditor"></div>
       </div>
     </div>
   </div>

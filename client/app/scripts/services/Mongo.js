@@ -34,20 +34,5 @@ clientApp.factory('Mongo', function($resource) {
 
 });
 
-// api/
-//x createHuddle
-//x updateHuddle/:huddleId
-//generate/:huddleId
-//listFilesForHuddle/:huddleId
-//updateHuddleOutline/:huddleId
-
-//cherryPick
-//updateOrder
-
-//updateFile
-//viewFile/:filename/:huddleID
-//viewFileFromIndividual/:filename/:huddleID
-//viewFileFromPresentation/:filename/:huddleID
-
 //huddles/:huddleId
-
+//api/cherryPick

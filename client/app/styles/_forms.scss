@@ -15,14 +15,18 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-  padding: 8px 0 8px 13px;
+  padding: 22px 13px 20px 13px;
   width: 100%;
   color: $dark_purple;
   //@include border-radius(0);
-  &:focus {
+  &:focus, &:hover {
     border-color: darken($yellow, 10%);
     @include box-shadow(0 0 6px lighten($yellow, 20%));
   }
+}
+
+label {
+  margin: 8px 0 1px 0;
 }
 
 // HTML5 invalid states

@@ -9,6 +9,12 @@ clientApp.factory('Huddle', function($resource, Mongo) {
     get: function(){
       return _huddle;
     },
+    create: function(huddleObj){
+      _huddle = {};
+      for (var prop in huddleObj) {
+        _huddle[prop] = huddleObj[prop];
+      }
+    },
     update: function(huddleObj){
       for (var prop in huddleObj) {
         _huddle[prop] = huddleObj[prop];

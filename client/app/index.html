@@ -27,6 +27,16 @@
             <script src="scripts/vendor/json3.min.js"></script>
         <![endif]-->
 
+        <div class="navbar navbar-inverse">
+          <div class="navbar-inner">
+            <a class="brand" href="#">Code Huddle</a>
+            <ul class="nav">
+              <li><a href="#/browse">Browse</a></li>
+              <li><a href="#/create">Create</a></li>
+            </ul>
+          </div>
+        </div>
+
         <!-- Add your site or application content here -->
         <div class="container" ng-view></div>
 
@@ -50,13 +60,15 @@
         <script src="scripts/directives/ngBlur.js"></script>
         <script src="scripts/filters/checkmark.js"></script>
         <script src="scripts/filters/fromNow.js"></script>
-        <!-- <script src="scripts/filters/matchTechArray.js"></script> -->
+        <script src="scripts/filters/matchHuddle.js"></script>
         <script src="components/moment/min/moment.min.js"></script>
         <script src="components/angular-ui/build/angular-ui.js"></script>
         <script src="components/epiceditor/js/epiceditor.js"></script>
         <script src="components/underscore/underscore-min.js"></script>
         <script src="components/bootstrap-js/bootstrap.min.js"></script>
         <script src="scripts/vendor/jquery.tagsinput.js"></script>
+        <script src="scripts/services/FileManager.js"></script>
+        <script src="scripts/services/OutlineManager.js"></script>
         <!-- endbuild -->
 
         <!-- <script type="text/javascript" src="//use.typekit.net/dnt4yoo.js"></script>

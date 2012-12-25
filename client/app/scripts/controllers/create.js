@@ -36,8 +36,9 @@ clientApp.controller('CreateCtrl', function($scope, $location, Huddle, Mongo) {
       $scope.huddleLocal, //but pass along huddleName and user info to be saved during creation
       function success() {
         console.log("create success", $scope.huddleServer);
-        Huddle.update($scope.huddleServer);        
-        $location.path('settings/' + $scope.huddleServer._id);
+        Huddle.create($scope.huddleServer);        
+        //$location.path('settings/' + $scope.huddleServer._id);
+        $location.path('edit/' + $scope.huddleServer._id);
       },
       function error (err) {
         //console.log("create failed", err);

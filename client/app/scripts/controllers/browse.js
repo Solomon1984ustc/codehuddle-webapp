@@ -21,7 +21,7 @@ clientApp.controller('BrowseCtrl', function($scope, Mongo) {
     if ( filter === 'date') {
       $scope.orderByFilter = "-creationDate";
     }else{
-      $scope.orderByFilter = "studentRank";
+      $scope.orderByFilter = "studentRank"; //TODO: needs to be combined rank/ratings
     }
   }
 
@@ -39,6 +39,7 @@ clientApp.controller('BrowseCtrl', function($scope, Mongo) {
       $('#tech-tags').tagsInput({ 
           autocomplete_url: '/technologies.html', //TODO: not working?
           onChange: $scope.filterTech,
+          defaultText: '',
           width: '100%', 
           height: '16px'
         });
@@ -46,18 +47,29 @@ clientApp.controller('BrowseCtrl', function($scope, Mongo) {
   }
 
   $scope.filterTech = function() {
-    var technologies = $('#tech-tags').val().split(',');
-    $scope.query.techMain = technologies;
-    $scope.query.techSupporting = technologies;
+    $scope.query.techTags = $('#tech-tags').val();
+    $scope.forceRedraw();
+  }
+
+  $scope.filterByTag = function(tag) {
+    $('#tech-tags').addTag(tag);
+    $scope.forceRedraw();
+  }
+
+  $scope.split = function(tagArray) {
+    if ( typeof tagArray !== "undefined") {
+      return tagArray.split(',');
+    }else{
+      return [];
+    }
+  }
+
+  $scope.forceRedraw = function() {
     //if a scope digestion is already going on then it will get picked up and you won't
     //have to call the $scope.$apply() method
     if(!$scope.$$phase) { //this is used to prevent an overlap of scope digestion
       $scope.$apply(); //this will kickstart angular to recognize the change
     }
-  }
-
-  $scope.split = function(tagArray) {
-    return tagArray.split(',');
   }
 
 });
