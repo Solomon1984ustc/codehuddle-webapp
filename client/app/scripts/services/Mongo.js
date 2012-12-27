@@ -27,12 +27,15 @@ clientApp.factory('Mongo', function($resource) {
         params: {action:'updateHuddle'}
       },
       generateHuddle: {
-        method: 'POST',
+        method: 'GET',
         params: {action:'generateHuddle'}
+      },
+      cherryPick: {
+        method: 'POST',
+        params: {action:'cherryPick'}
       }
   });
 
 });
 
 //huddles/:huddleId
-//api/cherryPick

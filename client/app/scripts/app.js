@@ -26,9 +26,9 @@ var clientApp = angular.module('clientApp', ['ngResource','ui'])
         templateUrl: 'views/preview.html',
         controller: 'PreviewCtrl'
       })
-      .when('/pick/:huddleId', {
-        templateUrl: 'views/pick.html',
-        controller: 'PickCtrl'
+      .when('/remix/:huddleId', {
+        templateUrl: 'views/remix.html',
+        controller: 'RemixCtrl'
       })
       .when('/settings/:huddleId', {
         templateUrl: 'views/settings.html',

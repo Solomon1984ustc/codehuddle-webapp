@@ -25,7 +25,4 @@ clientApp.factory('OutlineManager', function($resource) {
 
 });
 
-// api/
-//x listFilesForHuddle/:huddleId
-//x updateHuddleOutline/:huddleId
 //x updateOrder

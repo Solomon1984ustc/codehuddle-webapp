@@ -30,9 +30,3 @@ clientApp.factory('FileManager', function($resource) {
   });
 
 });
-
-// api/
-//x updateFile
-//x viewFile/:filename/:huddleID
-//x viewFileFromIndividual/:filename/:huddleID
-//x viewFileFromPresentation/:filename/:huddleID

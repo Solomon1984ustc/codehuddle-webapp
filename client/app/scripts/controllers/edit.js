@@ -1,6 +1,6 @@
 'use strict';
 
-clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddle, Mongo, OutlineManager, FileManager) {
+clientApp.controller('EditCtrl', function($scope, $routeParams, $location, $resource, Huddle, Mongo, OutlineManager, FileManager) {
 
   //console.log("$routeParams.huddleId",$routeParams.huddleId);
 
@@ -30,7 +30,7 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
         $scope.huddleFiles = OutlineManager.listFilesForHuddle({
           huddleId: $scope.localHuddle._id
         }, function() {
-          console.log('get success', $scope.huddleFiles);
+          console.log('listFilesForHuddle success', $scope.huddleFiles);
 
           $scope.outline = $scope.huddleFiles.outline;
           console.log( $scope.outline );
@@ -126,32 +126,26 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
 
     // "remix" button tool tips
     $("#remix-btn").tooltip({placement:"right"});
+
   }
 
   $scope.fileClick = function(file) {
     console.log("fileClick",file);
 
+    // save old file
+    if ( $scope.editingFile ) {
+      $scope.updateFile( $scope.editingFile.filename, $scope.editor.exportFile() );
+    }
+
     $scope.editingFile = file;
 
-    // Load in index file (Note: didn't work)
-    // var viewFilePath = 'http://localhost:8000/api/viewFile/' + file.filename + '.md/' + $scope.localHuddle._id;
-    // console.log( viewFilePath );
-    // $scope.editor.importFile( viewFilePath, "#doesn't work" );
-    
     // Load in index file
     $scope.fileContents = FileManager.viewFile({
       filename: file.filename + '.md',
       huddleId: $scope.localHuddle._id
     }, function() {
-      //console.log( $scope.fileContents );
-
-      // NOTE: don't know why it comes back like an Array-like object
-      // but need to convert using makeArray....
-      // which is the same as Array.prototype.slice.call($scope.fileContents);
-      $scope.fileContents.length = _.size($scope.fileContents); // need length for makeArray to work
-      var contents = $.makeArray($scope.fileContents).join(''); 
-      $scope.editor.importFile( '', contents );
-
+      //console.log( $scope.fileContents.content );
+      $scope.editor.importFile( '', $scope.fileContents.content );
     }, function(err) {
       console.log('get error', err);
     });
@@ -170,19 +164,26 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
   }
 
   $scope.add = function(){
+
     $scope.untitledCounter += 1;
-    var filename = "untitled"+$scope.untitledCounter;
-    $scope.outline.push({"filename":filename}); //TODO
-    $scope.updateFile( filename );
+    var filename = "untitled-"+$scope.untitledCounter;
+
+    var defaultFileContent = "## Untitled " + $scope.untitledCounter + "\n\nStart editing this section.";
+    $scope.updateFile( filename, defaultFileContent );
+
+
+    $scope.outline.push({"filename":filename}); //TODO: could get updated version from server
+
+    // switch to the new file
+    var newFile = _.find($scope.outline, function(file){ return file.filename === filename; });
+    $scope.fileClick(newFile);
+
   }
 
-  $scope.updateFile = function(filename) {
-    // if (typeof(content) === "undefined") {
-    //     content = null; 
-    // }
-    //data = "filename=" + filename + "&data=" + btoa(content) + "&huddle=" + huddleId;
+  $scope.updateFile = function(filename, fileContents) {
+
     console.log("updateFile", filename);
-    console.log("exportFile", $scope.editor.exportFile());
+    console.log("fileContents", fileContents);
 
     $scope.updateFileStatus = FileManager.updateFile(
       {
@@ -190,7 +191,7 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
         huddleId: $scope.localHuddle._id
       },
       {
-        data: btoa($scope.editor.exportFile())
+        data: $scope.utf8_to_b64( fileContents )
       },
       function(){
         console.log("updateFile: ", $scope.updateFileStatus);
@@ -198,11 +199,30 @@ clientApp.controller('EditCtrl', function($scope, $routeParams, $location, Huddl
       function(err){
         console.log("updateFile err: ", err);
       });
+
   }
 
   $scope.preview = function() {
-    //console.log("preview");
-    $location.path('preview/' + $scope.localHuddle._id);
+
+    $scope.generateStatus = Mongo.generateHuddle(
+      {
+        huddleId: $scope.localHuddle._id
+      },
+      function(){
+        console.log("generateStatus success", $scope.generateStatus );
+        $location.path('preview/' + $scope.localHuddle._id);
+      },
+      function(err){
+        console.log(err);
+      });
+  }
+
+  $scope.remix = function() {
+    $location.path('remix/' + $scope.localHuddle._id);
+  }
+
+  $scope.utf8_to_b64 = function( str ) {
+    return window.btoa(unescape(encodeURIComponent( str )));
   }
 
 });

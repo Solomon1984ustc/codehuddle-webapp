@@ -2,6 +2,8 @@
 
 clientApp.controller('PreviewCtrl', function($scope, $routeParams, Mongo) {
 
+  console.log("preview loaded");
+
   console.log("$routeParams.huddleId",$routeParams.huddleId);
   if ( $routeParams.huddleId !== '' ) {
     $scope.huddle = Mongo.getHuddle(

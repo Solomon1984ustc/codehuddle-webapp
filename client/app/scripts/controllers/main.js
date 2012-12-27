@@ -2,12 +2,14 @@
 
 clientApp.controller('MainCtrl', function($scope, $resource, Huddle, Mongo) {
 
+  $scope.demoHuddleId = '50d9ec9435f44c6860000001';
+
   $scope.sitemap = [
     {title:'Browse',view:'browse'},
     {title:'Create',view:'create'},
-    {title:'Edit',view:'edit/50bb7d197a22ba50e2000001'},
-    {title:'Preview',view:'preview/50bb7d197a22ba50e2000001'},
-    {title:'Pick',view:'pick/50bb7d197a22ba50e2000001'}
+    {title:'Edit',view:'edit/' + $scope.demoHuddleId },
+    {title:'Preview',view:'preview/' + $scope.demoHuddleId },
+    {title:'Remix',view:'remix/' + $scope.demoHuddleId }
   ];
 
 });

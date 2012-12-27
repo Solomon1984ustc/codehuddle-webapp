@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: PickCtrl', function() {
+describe('Controller: RemixCtrl', function() {
 
   // load the controller's module
   beforeEach(module('clientApp'));
@@ -11,7 +11,7 @@ describe('Controller: PickCtrl', function() {
   // Initialize the controller and a mock scope
   beforeEach(inject(function($controller) {
     scope = {};
-    PickCtrl = $controller('PickCtrl', {
+    PickCtrl = $controller('RemixCtrl', {
       $scope: scope
     });
   }));

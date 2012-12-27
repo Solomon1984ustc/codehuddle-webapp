@@ -1,6 +1,6 @@
 'use strict';
 
-clientApp.controller('PickCtrl', function($scope, $routeParams, Mongo) {
+clientApp.controller('RemixCtrl', function($scope, $routeParams, Mongo) {
 
   console.log("$routeParams.huddleId",$routeParams.huddleId);
   if ( $routeParams.huddleId !== '' ) {
